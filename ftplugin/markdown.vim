@@ -54,7 +54,7 @@ endif
 " {{{ OPTIONS
 
 setlocal textwidth=0
-setlocal ts=2 sw=2 expandtab smarttab
+setlocal ts=4 sw=4 expandtab smarttab
 setlocal comments=b:*,b:-,b:+,n:>,se:``` commentstring=>\ %s
 setlocal formatoptions=tron
 setlocal formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\\|^\\s*[+-\\*]\\s\\+
@@ -152,12 +152,12 @@ command! -nargs=0 -range MarkdownEditBlock :<line1>,<line2>call markdown#EditBlo
 
 if g:markdown_enable_mappings
   " Jumping around
-  noremap <silent> <buffer> <script> ]] :<C-u>call <SID>JumpToHeader(1, 0)<CR>
-  noremap <silent> <buffer> <script> [[ :<C-u>call <SID>JumpToHeader(0, 0)<CR>
-  vnoremap <silent> <buffer> <script> ]] :<C-u>call <SID>JumpToHeader(1, 1)<CR>
-  vnoremap <silent> <buffer> <script> [[ :<C-u>call <SID>JumpToHeader(0, 1)<CR>
-  noremap <silent> <buffer> <script> ][ <nop>
-  noremap <silent> <buffer> <script> [] <nop>
+    noremap   <silent>  <buffer>  <script>  ]]  :<C-u>call  <SID>JumpToHeader(1,  0)<CR>
+    noremap   <silent>  <buffer>  <script>  [[  :<C-u>call  <SID>JumpToHeader(0,  0)<CR>
+    vnoremap  <silent>  <buffer>  <script>  ]]  :<C-u>call  <SID>JumpToHeader(1,  1)<CR>
+    vnoremap  <silent>  <buffer>  <script>  [[  :<C-u>call  <SID>JumpToHeader(0,  1)<CR>
+    noremap   <silent>  <buffer>  <script>  ][  <nop>
+    noremap   <silent>  <buffer>  <script>  []  <nop>
 
   if g:markdown_enable_insert_mode_mappings
     " Indenting things
@@ -196,3 +196,18 @@ endif
 " }}}
 
 let b:did_ftplugin = 1
+
+
+function! s:isAtStartOfLine(mapping)
+  let text_before_cursor = getline('.')[0 : col('.')-1]
+  let mapping_pattern = '\V' . escape(a:mapping, '\')
+  let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
+  return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
+endfunction
+
+inoreabbrev <expr> <bar><bar>
+          \ <SID>isAtStartOfLine('\|\|') ?
+          \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
+inoreabbrev <expr> __
+          \ <SID>isAtStartOfLine('__') ?
+          \ '<c-o>:silent! TableModeDisable<cr>' : '__'
