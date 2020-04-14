@@ -1,6 +1,7 @@
 if exists('b:did_ftplugin') | finish | endif
 
 " {{{ CONFIGURATION
+silent! TableModeEnable
 
 if !exists('g:markdown_flavor')
   let g:markdown_flavor = 'github'
@@ -148,6 +149,10 @@ function! s:IsAnEmptyListItem()
   return getline('.') =~ '\v^\s*%([-*+]|\d\.)\s*$'
 endfunction
 
+function! s:IsACheckListItem()
+  return getline('.') =~ '\v^\s*%([-*+]|\d\.)\s[ ].*$'
+endfunction
+
 function! s:IsAnEmptyQuote()
   return getline('.') =~ '\v^\s*(\s?\>)+\s*$'
 endfunction
@@ -176,36 +181,20 @@ if g:markdown_enable_mappings
     inoremap <silent> <buffer> <script> <expr> <S-Tab>
       \ <SID>IsAnEmptyListItem() \|\| <SID>IsAnEmptyQuote() ? '<C-O>:call <SID>Indent(0)<CR>' : '<Tab>'
 
-    if g:markdown_drop_empty_blockquotes
-      " Remove empty quote and list items when press <CR>
-      inoremap <silent> <buffer> <script> <expr> <CR> <SID>IsAnEmptyQuote() \|\| <SID>IsAnEmptyListItem() ? '<C-O>:normal 0D<CR>' : '<CR>'
-    else
-      " Remove only empty list items when press <CR>
-      inoremap <silent> <buffer> <script> <expr> <CR> <SID>IsAnEmptyListItem() ? '<C-O>:normal 0D<CR>' : '<CR>'
-    endif
+    " if g:markdown_drop_empty_blockquotes
+    "   " Remove empty quote and list items when press <CR>
+    "   inoremap <silent> <buffer> <script> <expr> <CR> <SID>IsAnEmptyQuote() \|\| <SID>IsAnEmptyListItem() ? '<C-O>:normal 0D<CR>' : '<CR>'
+    " else
+    "   " Remove only empty list items when press <CR>
+    "   inoremap <silent> <buffer> <script> <expr> <CR> <SID>IsAnEmptyListItem() ? '<C-O>:normal 0D<CR>' : '<CR>'
+    " endif
 
-    " Format tables
-    inoremap <silent> <buffer> <Bar> <Bar><Esc>:call markdown#FormatTable()<CR>a
   endif
 
-  " Switch status of things
-  execute 'nnoremap <silent> <buffer> ' . g:markdown_mapping_switch_status . ' :call markdown#SwitchStatus()<CR>'
-
-  " Leader mappings
-  nnoremap <buffer> <Leader>e :MarkdownEditBlock<CR>
-  vnoremap <buffer> <Leader>e :MarkdownEditBlock<CR>
-  nnoremap <silent> <buffer> <Leader>ft  :call markdown#FormatTable()<CR>
-
-  " Insert Mode mappings
-  if g:markdown_enable_insert_mode_leader_mappings
-    inoremap <buffer> <Leader>e <Esc>:MarkdownEditBlock<CR>
-    inoremap <silent> <buffer> <Leader>ft  <Esc>:call markdown#FormatTable()<CR>a
-  endif
 endif
 
 " }}}
 
-let b:did_ftplugin = 1
 
 
 function! s:isAtStartOfLine(mapping)
@@ -215,9 +204,14 @@ function! s:isAtStartOfLine(mapping)
   return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
 endfunction
 
-inoreabbrev <expr> <bar><bar>
-          \ <SID>isAtStartOfLine('\|\|') ?
-          \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
-inoreabbrev <expr> __
-          \ <SID>isAtStartOfLine('__') ?
-          \ '<c-o>:silent! TableModeDisable<cr>' : '__'
+  " Remove only empty list items when press <CR>
+  inoremap <silent> <buffer> <script> <expr> <CR> <SID>IsAnEmptyListItem() ? '<C-O>:normal 0Do<CR>' :  '<CR>'
+
+    noremap   <silent>  <buffer>  <script>  ]]  :<C-u>call  <SID>JumpToHeader(1,  0)<CR>
+    noremap   <silent>  <buffer>  <script>  [[  :<C-u>call  <SID>JumpToHeader(0,  0)<CR>
+    vnoremap  <silent>  <buffer>  <script>  ]]  :<C-u>call  <SID>JumpToHeader(1,  1)<CR>
+    vnoremap  <silent>  <buffer>  <script>  [[  :<C-u>call  <SID>JumpToHeader(0,  1)<CR>
+    noremap   <silent>  <buffer>  <script>  ][  <nop>
+    noremap   <silent>  <buffer>  <script>  []  <nop>
+
+let b:did_ftplugin = 1
