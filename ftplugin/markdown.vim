@@ -55,11 +55,21 @@ endif
 
 setlocal textwidth=0
 setlocal ts=4 sw=4 expandtab smarttab
-setlocal comments=b:*,b:-,b:+,n:>,se:``` commentstring=>\ %s
-setlocal formatoptions=tron
-setlocal formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\\|^\\s*[+-\\*]\\s\\+
+setlocal comments=n:>,b:-\ [\ ],b:-\ [x],b:*,b:-,b:+,se:```
+setlocal commentstring=>\ %s
+" setlocal formatoptions=tron
+setlocal formatoptions=ctnqro
+
+setlocal formatlistpat=^\\s*             "numbered lists
+setlocal formatlistpat+=\\d\\+\\.\\s\\+
+setlocal formatlistpat+=\\\|             "OR
+setlocal formatlistpat+=^\\s*            "bulleted lists lists
+setlocal formatlistpat+=[+-\\*] 
+setlocal formatlistpat+=\\s\\+
+
 setlocal nolisp
 setlocal autoindent
+setlocal nosmartindent
 
 " Enable spelling and completion based on dictionary words
 if &spelllang !~# '^\s*$' && g:markdown_enable_spell_checking
