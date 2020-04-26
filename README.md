@@ -1,7 +1,5 @@
 # Markdown for Neo/Vim
 
-${toc}
-
 A complete environment to create Markdown files with great syntax highlighting and support for key 
 productivity features in markdown.
 
@@ -19,26 +17,47 @@ to use the parts of the plugin that they choose.
 This is primarily for my personal use, but if anyone finds it useful, feel free to star it. If you find an 
 issue, submit a PR or open an issue.
 
-
 ## Features
 
 - [ ] Table Manipulation (courtesy of [vim-table-mode](https://github.com/dhruvasagar/vim-table-mode))
-- [ ] Full syntax highlighting with support for 4 space indents
-- [ ] task mode
+- [ ] Full syntax highlighting (except code blocks, though focus mode handles working on a block in its syntax environment)
+- [ ] Checklists
+- [ ] export mode (via pandoc)
+    - [ ] to pdf
+    - [ ] to html
+    - [ ] to bootstrap
+    - [ ] to beamer
+    - [ ] other
+        - [ ] doc
+        - [ ] powerpoint
+    - [ ] configurable:
+        - [ ] output location (default inline)
+        - [ ] output filename (defualt same as current file)
+        - [ ] mapping to open rendered output in pdf viewer
+        - [ ] add new export types + commands
+        - [ ] TODO: keep the export menu one dimensional if possible
+
+## TODO:
+
+- [ ] make empty check items clear if at end of list
+- [ ] make list items not clear unless at end of list with <cr>
+- [ ] fix list formatting numbers 1. & and checkboxes [ ] [x] 
+    - [ ]
+    - [ ]
 
 
 ## Features
 
-* Strong support for the Markdown flavor implemented by GitHub: what you see in Vim is what you get on GitHub
-* Complete syntax implementation: supports proper nesting of all elements in list items. This is the only plugin that is able to do that (and I believe it since it took me a *while* to make it right)
-* Code blocks and pieces of Markdown in the current file can be edited in a separate buffer and synchronized back when you finish
-  * Inside a Ruby fenced code block, `<Leader>e` opens a temporary buffer with the right file type
-  * Select a range in visual mode and `<Leader>e` opens a temporary buffer with file type `markdown`. I call it *Focus Mode* because you can edit a portion of a Markdown file in isolation
-  * Finally, on an empty line, `<Leader>e` asks for a file type and then opens a temporary buffer with that file type
-  * When you leave the temporary buffer the content syncs back to the main file
-  ![EditCodeBlock](https://github.com/gabrielelana/vim-markdown/raw/master/images/vim_markdown_edit_code_block.gif)
-* Folding for: headers, code blocks and html blocks
-* Format tables automatically (requires [`Tabular`](https://github.com/godlygeek/tabular) plugin)
+- Strong support for the Markdown flavor implemented by GitHub: what you see in Vim is what you get on GitHub
+- Complete syntax implementation: supports proper nesting of all elements in list items. This is the only plugin that is able to do that (and I believe it since it took me a *while* to make it right)
+- Code blocks and pieces of Markdown in the current file can be edited in a separate buffer and synchronized back when you finish
+    - Inside a Ruby fenced code block, `<Leader>e` opens a temporary buffer with the right file type
+    - Select a range in visual mode and `<Leader>e` opens a temporary buffer with file type `markdown`. I call it *Focus Mode* because you can edit a portion of a Markdown file in isolation
+    - Finally, on an empty line, `<Leader>e` asks for a file type and then opens a temporary buffer with that file type
+    - When you leave the temporary buffer the content syncs back to the main file
+    ![EditCodeBlock](https://github.com/gabrielelana/vim-markdown/raw/master/images/vim_markdown_edit_code_block.gif)
+- Folding for: headers, code blocks and html blocks
+- Format tables automatically (requires [`Tabular`](https://github.com/godlygeek/tabular) plugin)
 
 ## Installation
 
@@ -51,7 +70,7 @@ Plug 'aareman/vim-markdown'
 ## Dependencies
 
 ```vim
-" Required 
+" Required (unless disabled, see configuration options)
 Plug 'dhruvasagar/vim-table-mode'
 
 " Recommended
@@ -70,6 +89,16 @@ This section will contain preliminary documentation until full documentation is 
 
 By default settings are enabled. To disable them, set the corresponding setting variable to true.
 
+```vim
+let  g:markdown_disable_folding             =   0
+let  g:markdown_disable_motions             =   0
+let  g:markdown_disable_spell_checking      =   0
+let  g:markdown_disable_conceal             =   0
+let  g:markdown_disable_table_mode          =   0
+let  g:markdown_disable_pandoc_integration  =   0
+let  g:markdown_disable_clear_empty_on_cr   =   0
+```
+
 ### Optional Mappings
 
 | Mode     | Mapping                                |
@@ -83,35 +112,23 @@ By default settings are enabled. To disable them, set the corresponding setting 
 - `]]` start of the next header
 - `[[` start of the previous header
 
-### Default Vimrc Config
-
-```vim
-let g:markdown_include_jekyll_support = 1
-let g:markdown_disable_folding = 1
-let g:markdown_disable_motions = 1
-let g:markdown_disable_spell_checking = 1
-let g:markdown_disable_conceal = 1
-let g:markdown_disable_table_mode_integration = 1
-```
-
 ### Tables
 
 - vim table mode is enabled by default
 - to toggle it off use `<leader>tm`
 - see the table mode docs `:help vim-table-mode`
 
-
-### Unsupported Features
+### Removed Features
 
 - Jekyll Support
-- checklists will auto insert a completed item when you press enter from a line with a completed item
 
 ## Known Issues
 
 - `formatlistpat` doesn't work for ordered lists
 - `formatoptions` thinks that `*` in horizontal rules are list items
+- checklists will auto insert a completed item when you press enter from a line with a completed item
 
-If you use https://github.com/Yggdroot/indentLine I recommend setting this in your vimrc
+If you use https://github.com/Yggdroot/indentLine I recommend setting the following in your vimrc
 
 ```vim
 let g:indentLine_concealcursor=""
