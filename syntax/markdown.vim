@@ -15,10 +15,10 @@ if !exists('g:markdown_flavor')
   let g:markdown_flavor = 'github'
 endif
 
-if exists('g:markdown_enable_conceal') && g:markdown_enable_conceal
+if !exists('g:markdown_disable_conceal')
     let b:markdown_concealends = 'concealends'
     let b:markdown_conceal = 'conceal'
-    set conceallevel=2
+    set conceallevel=1
     set concealcursor=
 else
     let b:markdown_concealends = ''
