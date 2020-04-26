@@ -17,11 +17,11 @@ to use the parts of the plugin that they choose.
 This is primarily for my personal use, but if anyone finds it useful, feel free to star it. If you find an 
 issue, submit a PR or open an issue.
 
-## Features
+## TODO:
 
-- [ ] Table Manipulation (courtesy of [vim-table-mode](https://github.com/dhruvasagar/vim-table-mode))
-- [ ] Full syntax highlighting (except code blocks, though focus mode handles working on a block in its syntax environment)
-- [ ] Checklists
+- [x] Table Manipulation (courtesy of [vim-table-mode](https://github.com/dhruvasagar/vim-table-mode))
+- [x] Full syntax highlighting (except code blocks, though focus mode handles working on a block in its syntax environment)
+- [x] Checklists
 - [ ] export mode (via pandoc)
     - [ ] to pdf
     - [ ] to html
@@ -36,14 +36,9 @@ issue, submit a PR or open an issue.
         - [ ] mapping to open rendered output in pdf viewer
         - [ ] add new export types + commands
         - [ ] TODO: keep the export menu one dimensional if possible
-
-## TODO:
-
-- [ ] make empty check items clear if at end of list
+- [x] make empty check items clear if at end of list
 - [ ] make list items not clear unless at end of list with <cr>
-- [ ] fix list formatting numbers 1. & and checkboxes [ ] [x] 
-    - [ ]
-    - [ ]
+- [x] fix list formatting numbers 1. & and checkboxes [ ] [x] 
 
 
 ## Features
