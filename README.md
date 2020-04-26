@@ -52,7 +52,6 @@ issue, submit a PR or open an issue.
     - When you leave the temporary buffer the content syncs back to the main file
     ![EditCodeBlock](https://github.com/gabrielelana/vim-markdown/raw/master/images/vim_markdown_edit_code_block.gif)
 - Folding for: headers, code blocks and html blocks
-- Format tables automatically (requires [`Tabular`](https://github.com/godlygeek/tabular) plugin)
 
 ## Installation
 
