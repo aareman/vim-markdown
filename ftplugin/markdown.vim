@@ -127,4 +127,8 @@ if !exists("g:markdown_disable_clear_empty_on_cr") || g:markdown_disable_clear_e
     inoremap <silent> <buffer> <script> <expr> <CR> <SID>MarkdownCarriageReturn()
 endif
 
+nnoremap <Plug>(vim-markdown-toggle-checkbox) :call markdown#SwitchStatus()<cr>
+nnoremap <Plug>(vim-markdown-edit-code-block) :call markdown#EditBlock()<cr>
+vnoremap <Plug>(vim-markdown-edit-code-block) :call markdown#EditBlock()<cr>
+
 let b:did_ftplugin = 1
