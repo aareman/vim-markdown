@@ -526,3 +526,8 @@ function! markdown#SwitchStatus()
   endif
 endfunction
 " }}}
+
+nnoremap <Plug>(vim-markdown-toggle-checkbox) :call markdown#SwitchStatus()<cr>
+nnoremap <Plug>(vim-markdown-edit-code-block) :call markdown#EditBlock()<cr>
+vnoremap <Plug>(vim-markdown-edit-code-block) :call markdown#EditBlock()<cr>
+

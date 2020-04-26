@@ -40,6 +40,7 @@ issue, submit a PR or open an issue.
 - [ ] make list items not clear unless at end of list with <cr>
 - [x] fix list formatting numbers 1. & and checkboxes [ ] [x] 
 
+Other plans are to rename this plugin `markdown-friends.vim` and introduce a set of recommended plugins in unix style that all add to create a powerful and modular markdown environment.
 
 ## Features
 
