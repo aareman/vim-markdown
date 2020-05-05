@@ -37,7 +37,7 @@ issue, submit a PR or open an issue.
         - [ ] add new export types + commands
         - [ ] TODO: keep the export menu one dimensional if possible
 - [x] make empty check items clear if at end of list
-- [ ] make list items not clear unless at end of list with <cr>
+- [ ] make list items not clear unless at end of list with `<cr>`
 - [x] fix list formatting numbers 1. & and checkboxes [ ] [x] 
 
 Other plans are to rename this plugin `markdown-friends.vim` and introduce a set of recommended plugins in unix style that all add to create a powerful and modular markdown environment.

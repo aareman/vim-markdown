@@ -16,10 +16,10 @@ endif
 
 setlocal textwidth=0
 setlocal ts=4 sw=4 expandtab smarttab
-setlocal comments=n:>,b:-\ [\ ],b:-\ [x],b:*,b:-,b:+,se:```
+setlocal comments=n:>,b:-\ [\ ],b:-\ [x],b:*,b:-,b:1.,b:+,se:```
 setlocal commentstring=>\ %s
-" setlocal formatoptions=tron
-setlocal formatoptions=ctnqro
+setlocal formatoptions=tron
+" setlocal formatoptions=ctnqro
 
 setlocal formatlistpat=^\\s*             "numbered lists
 setlocal formatlistpat+=\\d\\+\\.\\s\\+
@@ -30,6 +30,7 @@ setlocal formatlistpat+=\\s\\+
 
 setlocal nolisp
 setlocal autoindent
+setlocal nocindent
 setlocal nosmartindent
 
 " Enable spelling and completion based on dictionary words
@@ -124,7 +125,7 @@ endfunction
 
 if !exists("g:markdown_disable_clear_empty_on_cr") || g:markdown_disable_clear_empty_on_cr == 0
     " Remove only empty list items when press <CR>
-    inoremap <silent> <buffer> <script> <expr> <CR> <SID>MarkdownCarriageReturn()
+    imap <silent> <buffer> <script> <expr> <CR> <SID>MarkdownCarriageReturn()
 endif
 
 let b:did_ftplugin = 1
