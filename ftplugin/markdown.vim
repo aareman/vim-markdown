@@ -16,7 +16,7 @@ endif
 
 setlocal textwidth=0
 setlocal ts=4 sw=4 expandtab smarttab
-setlocal comments=n:>,b:-\ [\ ],b:-\ [x],b:*,b:-,b:1.,b:+,se:```
+setlocal comments=n:>,b:-\ [\ ],b:-\ [x],b:*,b:-,b:1.,b:2.,b:3.,b:4.,b:5.,b:6.,b:7.,b:8.,b:9.,b:+,se:```
 setlocal commentstring=>\ %s
 setlocal formatoptions=tron
 " setlocal formatoptions=ctnqro
@@ -77,6 +77,10 @@ function! s:IsAnEmptyListItem()
     return getline('.') =~ '\v^\s*%([-*+]|\d\.)\s*$'
 endfunction
 
+function! s:IsANonEmptyNumberList()
+    return getline('.') =~ '^\s*\d\.\s'
+endfunction
+
 function! s:IsAnEmptyCheckListItem()
     return getline('.') =~ '\v^\s*%([-*+]|\d\.)\s\[\s\]\s*$'
 endfunction
@@ -86,7 +90,10 @@ function! s:IsAnEmptyQuote()
 endfunction
 
 function! s:MarkdownCarriageReturn()
-    if s:IsAnEmptyListItem() || s:IsAnEmptyQuote() || s:IsAnEmptyCheckListItem()
+    if s:IsANonEmptyNumberList()
+        echom "nonemptynumlist"
+        return "\<esc>:normal yyp0\<c-a>lllD\<cr>A"
+    elseif s:IsAnEmptyListItem() || s:IsAnEmptyQuote() || s:IsAnEmptyCheckListItem()
         return "\<C-O>:normal 0Do\<CR>"
     else
         return "\<CR>"
