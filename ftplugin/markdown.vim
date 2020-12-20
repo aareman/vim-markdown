@@ -2,7 +2,8 @@ if exists('b:did_ftplugin') | finish | endif
 
 " {{{ CONFIGURATION
 if !exists('g:markdown_disable_table_mode') ||  g:markdown_disable_table_mode == 0
-    silent! TableModeEnable
+    au InsertLeave silent! TableModeDisable
+    imap <buffer> | <c-o>:silent! TableModeEnable<cr>
 endif
 
 if !exists('g:markdown_flavor')
